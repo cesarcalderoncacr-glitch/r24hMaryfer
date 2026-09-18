@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Recordatorio de 24 horas - Maryfer Terrazas</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      color: #1f2937;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .contenedor {
+      max-width: 850px;
+      margin: auto;
+    }
+
+    .encabezado {
+      background: #6b4fa1;
+      color: white;
+      padding: 25px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 26px;
+    }
+
+    h2 {
+      color: #6b4fa1;
+      font-size: 20px;
+      margin-top: 0;
+    }
+
+    .seccion {
+      background: white;
+      padding: 22px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px #0000000d;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 6px;
+      margin-top: 12px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 11px;
+      border: 1px solid #d1d5db;
+      border-radius: 7px;
+      font-size: 15px;
+      background: white;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    .fila {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .comida {
+      border: 1px solid #ddd6fe;
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 15px;
+    }
+
+    .comida h3 {
+      color: #6b4fa1;
+      margin-top: 0;
+    }
+
+    .alimento {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr auto;
+      gap: 8px;
+      align-items: end;
+      margin-bottom: 10px;
+    }
+
+    .alimento label {
+      font-size: 12px;
+      margin-top: 0;
+    }
+
+    .boton {
+      border: none;
+      padding: 12px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+      margin-top: 12px;
+    }
+
+    .boton:hover {
+      opacity: 0.9;
+    }
+
+    .principal {
+      background: #6b4fa1;
+      color: white;
+    }
+
+    .secundario {
+      background: #ede9fe;
+      color: #5b3d91;
+    }
+
+    .peligro {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 10px;
+      margin: 0;
+    }
+
+    .resultado {
+      background: #ecfdf5;
+      color: #065f46;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      display: none;
+    }
+
+    .nota {
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+
+      body {
+        padding: 10px;
+      }
+
+      .fila {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .alimento {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .alimento .nombre {
+        grid-column: span 2;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<div class="contenedor">
+
+  <!-- ENCABEZADO -->
+
+  <div class="encabezado">
+
+    <h1>Recordatorio de 24 horas</h1>
+
+    <p>
+      Paciente: <strong>Maryfer Terrazas</strong>
+    </p>
+
+  </div>
+
+
+  <form id="formulario">
+
+
+    <!-- REGISTRO DE ALIMENTOS -->
+
+    <div class="seccion">
+
+      <h2>1. Registro de alimentos y bebidas</h2>
+
+      <p class="nota">
+
+        Registra todo lo consumido durante el día anterior,
+        incluyendo agua, bebidas, aceites, azúcar y alimentos
+        entre comidas.
+
+      </p>
+
+      <!-- AQUÍ SE CREAN LOS TIEMPOS DE COMIDA -->
+
+      <div id="comidas"></div>
+
+
+      <!-- BOTÓN AGREGAR TIEMPO DE COMIDA -->
+
+      <button
+        type="button"
+        class="boton secundario"
+        id="agregarComida">
+
+        + Agregar tiempo de comida
+
+      </button>
+
+    </div>
+
+
+    <!-- OBSERVACIONES -->
+
+    <div class="seccion">
+
+      <h2>2. Observaciones del consumo</h2>
+
+
+      <label for="hambre">
+
+        ¿Cómo describiría su hambre durante el día?
+
+      </label>
+
+
+      <select id="hambre">
+
+        <option value="">
+          Seleccione...
+        </option>
+
+        <option>Muy baja</option>
+
+        <option>Baja</option>
+
+        <option>Normal</option>
+
+        <option>Alta</option>
+
+        <option>Muy alta</option>
+
+      </select>
+
+
+      <label for="comentarios">
+
+        Comentarios adicionales
+
+      </label>
+
+
+      <textarea
+        id="comentarios"
+        rows="4"
+        placeholder="Cambios en el apetito, comidas omitidas, etc.">
+      </textarea>
+
+
+    </div>
+
+
+    <!-- BOTONES FINALES -->
+
+    <button
+      type="submit"
+      class="boton principal">
+
+      Guardar recordatorio en excel
+
+    </button>
+
+
+    <button
+      type="button"
+      class="boton secundario"
+      id="limpiar">
+
+      Limpiar formulario
+
+    </button>
+
+
+  </form>
+
+
+  <div
+    id="resultado"
+    class="resultado"
+    aria-live="polite">
+  </div>
+
+
+</div>
+
+
+<script>
+
+
+  // =====================================
+  // VARIABLES
+  // =====================================
+
+
+  let contadorComidas = 0;
+
+
+  const comidas =
+    document.getElementById("comidas");
+
+
+  const formulario =
+    document.getElementById("formulario");
+
+
+  const resultado =
+    document.getElementById("resultado");
+
+
+  const botonAgregarComida =
+    document.getElementById("agregarComida");
+
+
+  const botonLimpiar =
+    document.getElementById("limpiar");
+
+
+
+  // =====================================
+  // FUNCIÓN: AGREGAR TIEMPO DE COMIDA
+  // =====================================
+
+
+  function agregarComida(nombre = "Otro") {
+
+
+    contadorComidas++;
+
+
+    // Crear una nueva caja HTML
+
+    const div =
+      document.createElement("div");
+
+
+    // Asignar clase de diseño
+
+    div.className = "comida";
+
+
+    // Guardar el número de comida
+
+    div.dataset.comida = contadorComidas;
+
+
+    // Crear el contenido de la comida
+
+    div.innerHTML = `
+
+      <h3>
+        Tiempo de comida ${contadorComidas}
+      </h3>
+
+
+      <div class="fila">
+
+        <div>
+
+          <label>
+            Nombre del tiempo de comida
+          </label>
+
+          <select class="tipoComida">
+
+            <option value="Desayuno">
+              Desayuno
+            </option>
+
+            <option value="Colación matutina">
+              Colación matutina
+            </option>
+
+            <option value="Comida">
+              Comida
+            </option>
+
+            <option value="Colación vespertina">
+              Colación vespertina
+            </option>
+
+            <option value="Cena">
+              Cena
+            </option>
+
+            <option value="Colación nocturna">
+              Colación nocturna
+            </option>
+
+            <option value="Otro">
+              Otro
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div>
+
+          <label>
+            Hora de consumo
+          </label>
+
+          <input
+            type="time"
+            class="hora">
+
+        </div>
+
+      </div>
+
+
+      <label>
+        ¿Dónde consumió?
+      </label>
+
+      <input
+        type="text"
+        class="lugar"
+        placeholder="Casa, trabajo, restaurante...">
+
+
+      <div class="listaAlimentos"></div>
+
+
+      <button
+        type="button"
+        class="boton secundario agregarAlimento">
+
+        + Agregar alimento
+
+      </button>
+
+
+      <button
+        type="button"
+        class="boton peligro eliminarComida">
+
+        Eliminar tiempo de comida
+
+      </button>
+
+    `;
+
+
+    // Agregar la comida a la página
+
+    comidas.appendChild(div);
+
+
+    // Seleccionar el tipo de comida
+
+    div.querySelector(".tipoComida").value =
+      nombre;
+
+
+    // =====================================
+    // BOTÓN AGREGAR ALIMENTO
+    // =====================================
+
+
+    div.querySelector(".agregarAlimento")
+      .addEventListener("click", function() {
+
+        agregarAlimento(div);
+
+      });
+
+
+
+    // =====================================
+    // BOTÓN ELIMINAR COMIDA
+    // =====================================
+
+
+    div.querySelector(".eliminarComida")
+      .addEventListener("click", function() {
+
+        div.remove();
+
+      });
+
+
+
+    // Agregar un alimento inicial
+
+    agregarAlimento(div);
+
+
+  }
+
+
+
+  // =====================================
+  // FUNCIÓN: AGREGAR ALIMENTO
+  // =====================================
+
+
+  function agregarAlimento(comida) {
+
+
+    const lista =
+      comida.querySelector(".listaAlimentos");
+
+
+    const div =
+      document.createElement("div");
+
+
+    div.className = "alimento";
+
+
+    div.innerHTML = `
+
+      <div class="nombre">
+
+        <label>
+          Alimento o bebida
+        </label>
+
+        <input
+          type="text"
+          class="nombreAlimento"
+          placeholder="Ej. Huevo con tortilla"
+          required>
+
+      </div>
+
+
+      <div>
+
+        <label>
+          Cantidad
+        </label>
+
+        <input
+          type="number"
+          class="cantidad"
+          min="0"
+          step="any"
+          placeholder="2">
+
+      </div>
+
+
+      <div>
+
+        <label>
+          Unidad
+        </label>
+
+        <input
+          type="text"
+          class="unidad"
+          placeholder="Piezas, g, ml">
+
+      </div>
+
+
+      <button
+        type="button"
+        class="boton peligro eliminarAlimento">
+
+        X
+
+      </button>
+
+    `;
+
+
+    lista.appendChild(div);
+
+
+
+    // Botón eliminar alimento
+
+    div.querySelector(".eliminarAlimento")
+      .addEventListener("click", function() {
+
+        div.remove();
+
+      });
+
+
+  }
+
+
+
+  // =====================================
+  // BOTÓN AGREGAR TIEMPO DE COMIDA
+  // =====================================
+
+
+  botonAgregarComida.addEventListener(
+    "click",
+    function() {
+
+      agregarComida("Otro");
+
+    }
+  );
+
+
+
+ // =====================================
+// POWER AUTOMATE
+// =====================================
+
+const POWER_AUTOMATE_URL =
+  "https://defaulte1ba63957a644b92aaf3a7c020c3d1.8f.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/15/workflows/5784c099eb474e338b06f6598f82d0d6/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=WGrDTjdqwd3G6fg__MA9rB2p2bn-lx-EiXN7NyieYfY";
+
+
+// =====================================
+// GUARDAR RECORDATORIO EN POWER AUTOMATE
+// =====================================
+
+formulario.addEventListener(
+  "submit",
+  async function(event) {
+
+    event.preventDefault();
+
+
+    const botonGuardar =
+      formulario.querySelector(
+        'button[type="submit"]'
+      );
+
+
+    // Evitar doble envío
+
+    botonGuardar.disabled = true;
+
+    botonGuardar.textContent =
+      "Guardando...";
+
+
+    try {
+
+
+      // =====================================
+      // FECHA ACTUAL
+      // =====================================
+
+      const ahora = new Date();
+
+      const fecha =
+        ahora.getFullYear() +
+        "-" +
+        String(ahora.getMonth() + 1).padStart(2, "0") +
+        "-" +
+        String(ahora.getDate()).padStart(2, "0");
+
+
+      // =====================================
+      // PACIENTE
+      // =====================================
+
+      const paciente =
+        "Maryfer Terrazas";
+
+
+      // =====================================
+      // OBTENER TIEMPOS DE COMIDA
+      // =====================================
+
+      const comidasRegistradas =
+        document.querySelectorAll(".comida");
+
+
+      let registrosEnviados = 0;
+
+
+      // =====================================
+      // RECORRER CADA TIEMPO DE COMIDA
+      // =====================================
+
+      for (const comida of comidasRegistradas) {
+
+
+        const tipo =
+          comida.querySelector(
+            ".tipoComida"
+          ).value;
+
+
+        const hora =
+          comida.querySelector(
+            ".hora"
+          ).value;
+
+
+        // =====================================
+        // OBTENER ALIMENTOS
+        // =====================================
+
+        const alimentos =
+          comida.querySelectorAll(
+            ".alimento"
+          );
+
+
+        for (const alimento of alimentos) {
+
+
+          const nombre =
+            alimento.querySelector(
+              ".nombreAlimento"
+            ).value;
+
+
+          const cantidad =
+            alimento.querySelector(
+              ".cantidad"
+            ).value;
+
+
+          const unidad =
+            alimento.querySelector(
+              ".unidad"
+            ).value;
+
+
+          // =====================================
+          // VALIDAR ALIMENTO
+          // =====================================
+
+          if (!nombre.trim()) {
+            continue;
+          }
+
+
+          // =====================================
+          // CREAR DATOS PARA POWER AUTOMATE
+          // =====================================
+
+          const datos = {
+
+            fecha: fecha,
+
+            paciente: paciente,
+
+            tiempo: tipo,
+
+            hora: hora,
+
+            alimento: nombre,
+
+            cantidad: cantidad,
+
+            unidad: unidad
+
+          };
+
+
+          // =====================================
+          // ENVIAR A POWER AUTOMATE
+          // =====================================
+
+          const respuesta =
+            await fetch(
+              POWER_AUTOMATE_URL,
+              {
+
+                method: "POST",
+
+                headers: {
+                  "Content-Type":
+                    "application/json"
+                },
+
+                body:
+                  JSON.stringify(datos)
+
+              }
+            );
+
+
+          // =====================================
+          // COMPROBAR RESPUESTA
+          // =====================================
+
+          if (!respuesta.ok) {
+
+            throw new Error(
+              "Power Automate respondió con error: " +
+              respuesta.status
+            );
+
+          }
+
+
+          registrosEnviados++;
+
+
+        }
+
+      }
+
+
+      // =====================================
+      // COMPROBAR QUE HAYA DATOS
+      // =====================================
+
+      if (registrosEnviados === 0) {
+
+        alert(
+          "Agrega al menos un alimento."
+        );
+
+        botonGuardar.disabled = false;
+
+        botonGuardar.textContent =
+          "Guardar recordatorio en Excel";
+
+        return;
+
+      }
+
+
+      // =====================================
+      // MENSAJE DE ÉXITO
+      // =====================================
+
+      resultado.style.display =
+        "block";
+
+
+      resultado.textContent =
+        "✓ Recordatorio guardado correctamente en Excel. " +
+        registrosEnviados +
+        " registro(s) enviado(s).";
+
+
+    } catch (error) {
+
+
+      // =====================================
+      // ERROR
+      // =====================================
+
+      console.error(error);
+
+
+      resultado.style.display =
+        "block";
+
+
+      resultado.textContent =
+        "✗ No se pudo guardar el recordatorio. " +
+        "Verifica la conexión con Power Automate.";
+
+
+      alert(
+        "No se pudieron enviar los datos a Power Automate.\n\n" +
+        error.message
+      );
+
+
+    } finally {
+
+
+      // =====================================
+      // RESTAURAR BOTÓN
+      // =====================================
+
+      botonGuardar.disabled =
+        false;
+
+
+      botonGuardar.textContent =
+        "Guardar recordatorio en Excel";
+
+
+    }
+
+  }
+);
+  // =====================================
+  // LIMPIAR FORMULARIO
+  // =====================================
+
+
+  botonLimpiar.addEventListener(
+    "click",
+    function() {
+
+
+      if (
+        confirm("¿Deseas borrar todas las respuestas?")
+      ) {
+
+
+        formulario.reset();
+
+
+        comidas.innerHTML = "";
+
+
+        contadorComidas = 0;
+
+
+        agregarComida("Desayuno");
+
+
+        resultado.style.display = "none";
+
+
+      }
+
+
+    }
+
+  );
+
+
+
+  // =====================================
+  // CREAR DESAYUNO INICIAL
+  // =====================================
+
+
+  agregarComida("Desayuno");
+
+
+</script>
+
+</body>
+
+</html>
